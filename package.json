@@ -1,0 +1,53 @@
+{
+  "name": "@rail402/x402",
+  "version": "0.1.0",
+  "description": "Make any REST endpoint x402-payable with USDC on Base. Express, Next.js, and FastAPI adapters.",
+  "license": "MIT",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": ["dist", "README.md", "LICENSE"],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsup src/index.ts --format esm,cjs --dts --clean",
+    "dev": "tsup src/index.ts --format esm,cjs --dts --watch",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src test",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "x402",
+    "402",
+    "usdc",
+    "base",
+    "payments",
+    "agent",
+    "rail402",
+    "ai-agents",
+    "micropayments"
+  ],
+  "homepage": "https://github.com/rail402/x402-sdk#readme",
+  "repository": { "type": "git", "url": "git+https://github.com/rail402/x402-sdk.git" },
+  "bugs": { "url": "https://github.com/rail402/x402-sdk/issues" },
+  "engines": { "node": ">=18" },
+  "peerDependencies": {
+    "viem": "^2.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.4.0",
+    "viem": "^2.50.0",
+    "vitest": "^2.0.0"
+  }
+}
