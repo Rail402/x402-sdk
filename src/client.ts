@@ -14,6 +14,17 @@ export function isPaymentRequired(body: unknown): body is X402PaymentRequirement
   );
 }
 
+/**
+ * Extract the x402 requirements from a 402 response body, whether the gateway
+ * returns them at the top level or nested under a `payment` key.
+ */
+export function extractRequirements(body: unknown): X402PaymentRequirements | null {
+  if (isPaymentRequired(body)) return body;
+  const nested = (body as { payment?: unknown } | null)?.payment;
+  if (isPaymentRequired(nested)) return nested;
+  return null;
+}
+
 const USDC_TRANSFER_ABI = [
   {
     type: "function",
@@ -80,9 +91,10 @@ export async function fetchWithPayment(
   if (first.status !== 402) return first;
 
   const body: unknown = await first.clone().json().catch(() => null);
-  if (!isPaymentRequired(body)) return first;
+  const requirements = extractRequirements(body);
+  if (!requirements) return first;
 
-  const proof = await payRequirements(wallet, body);
+  const proof = await payRequirements(wallet, requirements);
   const headers = new Headers(init.headers);
   headers.set("x-payment-proof", JSON.stringify(proof));
   if (proof.payerWallet) headers.set("x-payer-wallet", proof.payerWallet);

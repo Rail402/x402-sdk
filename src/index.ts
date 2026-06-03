@@ -10,7 +10,7 @@ export { withX402 } from "./express";
 export { withX402Payment } from "./nextjs";
 export { verifyPayment, type VerifyExpectation } from "./verify";
 export { createPaymentRequirements, toAtomic, fromAtomic } from "./requirements";
-export { fetchWithPayment, payRequirements, isPaymentRequired } from "./client";
+export { fetchWithPayment, payRequirements, isPaymentRequired, extractRequirements } from "./client";
 export { parseProofHeader, requirementHeaders } from "./http";
 export { NETWORKS, USDC_DECIMALS, TRANSFER_TOPIC, X402_HEADERS } from "./constants";
 export type {
